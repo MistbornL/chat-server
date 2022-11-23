@@ -10,7 +10,8 @@ const Users = require("./routes/userRoutes");
 // const TagRoutes = require("./routes/tagRoutes");
 
 //DESTRUCTURE ENV VARIABLES WITH DEFAULT VALUES
-const { PORT = 5000 } = process.env;
+const PORT = process.env.PORT;
+const SOCKET_PORT = process.env.SOCKET_PORT;
 
 // Create Application Object
 const app = express();
@@ -51,3 +52,6 @@ app.use("/users", Users);
 
 // APP LISTENER
 app.listen(PORT, () => log.green("SERVER STATUS", `Listening on port ${PORT}`));
+server.listen(SOCKET_PORT, () =>
+  log.green("SERVER STATUS", `Listening on port ${SOCKET_PORT}`)
+);
