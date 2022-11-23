@@ -3,8 +3,7 @@ const { Router } = require("express"); // import router from express
 const User = require("../models/user"); // import user model
 const bcrypt = require("bcryptjs"); // import bcrypt to hash passwords
 const jwt = require("jsonwebtoken"); // import jwt to sign tokens
-const { isLoggedIn } = require("./middleware");
-const axios = require("axios");
+const { isLoggedIn } = require("../controllers/middleware");
 
 const router = Router(); // create router to create route bundle
 

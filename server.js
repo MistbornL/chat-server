@@ -5,7 +5,7 @@ const cors = require("cors"); // import cors
 const http = require("http");
 const { Server } = require("socket.io");
 // const UserRoutes = require("./controllers/userController"); //import User Routes
-// const Users = require("./routes/userRoutes");
+const Users = require("./routes/userRoutes");
 // const CollectionRoutes = require("./routes/collectionRoutes");
 // const TagRoutes = require("./routes/tagRoutes");
 
@@ -44,7 +44,7 @@ io.on("connection", (socket) => {
   });
 });
 
-// app.use("/users", Users);
+app.use("/users", Users);
 // app.use("/collection", CollectionRoutes);
 // app.use("/user", UserRoutes);
 // app.use("/tag", TagRoutes);
