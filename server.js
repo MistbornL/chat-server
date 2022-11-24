@@ -45,7 +45,7 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use("/users", Users);
+app.use("/user", Users);
 // app.use("/collection", CollectionRoutes);
 // app.use("/user", UserRoutes);
 // app.use("/tag", TagRoutes);

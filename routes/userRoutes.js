@@ -15,9 +15,9 @@ router.post("/signup", async (req, res) => {
   try {
     // hash the password
     req.body.password = await bcrypt.hash(req.body.password, 10);
-    const candidate = await User.findOne({ email: req.body.email });
+    const candidate = await User.findOne({ username: req.body.username });
     if (candidate) {
-      res.status(409).json({ error: "email already exists" });
+      res.status(409).json({ error: "username already exists" });
     } else {
       const user = await User.create(req.body);
       res.json(user);
@@ -38,9 +38,9 @@ router.post("/login", async (req, res) => {
 
   try {
     // check if the user exists
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ username: req.body.username });
     if (user.status === "Blocked") {
-      return res.status(403).json({ message: "This email is blocked." });
+      return res.status(403).json({ message: "This user is blocked." });
     }
 
     if (user) {
@@ -48,7 +48,7 @@ router.post("/login", async (req, res) => {
       const result = bcrypt.compare(req.body.password, user.password);
       if (result) {
         // sign token and send it in response
-        const token = jwt.sign({ email: user.email }, SECRET);
+        const token = jwt.sign({ username: user.username }, SECRET);
         user.dateLastAuthorization = newDate;
         user.status = "Online";
         await user.save();
@@ -67,7 +67,7 @@ router.post("/login", async (req, res) => {
 router.get("/logout", isLoggedIn, async (req, res) => {
   try {
     await User.findOneAndUpdate(
-      { email: req.query.email },
+      { username: req.query.username },
       { status: "Offline" }
     );
     res.status(200).json({ message: "User changed." });
