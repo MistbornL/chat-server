@@ -6,7 +6,7 @@ var year = dateObj.getUTCFullYear();
 
 var newDate = year + "/" + month + "/" + day;
 const UserSchema = new Schema({
-  email: { type: String, required: true, unique: true },
+  username: { type: String, required: true, unique: true },
   password: { type: String, required: false },
   status: { type: String, required: true, default: "Active" },
   dateLastAuthorization: { type: Date },

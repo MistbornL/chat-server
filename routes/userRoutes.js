@@ -39,13 +39,10 @@ router.post("/login", async (req, res) => {
   try {
     // check if the user exists
     const user = await User.findOne({ username: req.body.username });
-    if (user.status === "Blocked") {
-      return res.status(403).json({ message: "This user is blocked." });
-    }
 
     if (user) {
       //check if password matches
-      const result = bcrypt.compare(req.body.password, user.password);
+      const result = await bcrypt.compare(req.body.password, user.password);
       if (result) {
         // sign token and send it in response
         const token = jwt.sign({ username: user.username }, SECRET);
