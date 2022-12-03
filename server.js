@@ -46,9 +46,6 @@ io.on("connection", (socket) => {
 });
 
 app.use("/user", Users);
-// app.use("/collection", CollectionRoutes);
-// app.use("/user", UserRoutes);
-// app.use("/tag", TagRoutes);
 
 // APP LISTENER
 app.listen(PORT, () => log.green("SERVER STATUS", `Listening on port ${PORT}`));
