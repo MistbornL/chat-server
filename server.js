@@ -10,28 +10,20 @@ const Users = require("./routes/userRoutes");
 // const TagRoutes = require("./routes/tagRoutes");
 
 //DESTRUCTURE ENV VARIABLES WITH DEFAULT VALUES
-const PORT = process.env.PORT;
-const SOCKET_PORT = process.env.SOCKET_PORT;
 
-// Create Application Object
+const PORT = process.env.PORT || 5000;
+const SOCKET_PORT = process.env.SOCKET_PORT || 5001;
+
 const app = express();
-
-// GLOBAL MIDDLEWARE
-app.use(cors()); // add cors headers
-app.use(express.json()); // parse json bodies
+app.use(cors());
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("this is the test route to make sure server is working");
 });
 
 const server = http.createServer(app);
-
-const io = new Server(server, {
-  cors: {
-    origin: "https://chat-app-gamma-azure.vercel.app/",
-    methods: ["GET", "POST"],
-  },
-});
+const io = new Server(server);
 
 io.on("connection", (socket) => {
   socket.on("join_room", (data) => {
@@ -45,10 +37,9 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use("/user", Users);
+app.use("/users", Users);
 
-// APP LISTENER
-app.listen(PORT, () => log.green("SERVER STATUS", `Listening on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 server.listen(SOCKET_PORT, () =>
-  log.green("SERVER STATUS", `Listening on port ${SOCKET_PORT}`)
+  console.log(`Server running on port ${SOCKET_PORT}`)
 );
